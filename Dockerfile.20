@@ -1,0 +1,15 @@
+from ubuntu:20.04
+ARG  myuser="ubuntu"
+run  apt update
+run  apt install -y g++ make gdb wget
+run wget -O /vscode.deb https://go.microsoft.com/fwlink/?LinkID=760868 
+env  DEBIAN_FRONTEND "noninteractive"
+run  dpkg -i /vscode.deb || :
+run  apt install -y -f
+run  useradd -m -s/bin/bash $myuser
+run  apt install -y libx11-xcb1 libx11-6 libxcomposite1 libglib2.0-0
+run  apt install -y libasound2
+run  apt install -y sudo vim python git make g++
+run  echo "$myuser ALL=(ALL) NOPASSWD: ALL" >>/etc/sudoers
+user $myuser
+workdir /home/$myuser
